@@ -2,9 +2,15 @@ const socket = io();
 
 const btn = document.getElementById('btn')
 const input = document.getElementById('input')
+const msgList = document.getElementById('msgList')
 btn.addEventListener('click',()=>{
-    socket.emit('from_Client',input.value)
+    socket.emit('from_Client',{
+        msg: input.value
+    })
 })
-socket.on('from_server',(msg)=>{
-    btn.innerText = msg
+
+socket.on('msg_received',(data)=>{
+    let liMsg = document.createElement('li')
+    liMsg.innerText = data.msg
+    msgList.appendChild(liMsg)
 })
